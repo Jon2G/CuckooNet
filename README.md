@@ -8,7 +8,7 @@
 * Modular
 * Response objectes mapped to C# objects
 * Fully asynchronous API
-* Take a look at the Cuckoo API documentation [https://developers.virustotal.com/reference for the VT API documentation (https://cuckoo.readthedocs.io/en/latest/usage/api)
+* Take a look at the Cuckoo API documentation [https://cuckoo.readthedocs.io/en/latest/usage/api](https://cuckoo.readthedocs.io/en/latest/usage/api)
 
 ### Example
 
