@@ -1,18 +1,45 @@
 ﻿using Cuckoo.Net.Enums;
+using Newtonsoft.Json;
 
 namespace Cuckoo.Net.ResponseModels.Reports
 {
     public class JsonReport : CuckooReport
     {
-        public string Json { get; set; }
         public override ReportFormat Format => ReportFormat.JSON;
-        public JsonReport(string value) : base(value)
+        [JsonProperty("info")]
+        public CuckooInfo Info { get; set; }
+
+        [JsonProperty("signatures")]
+        public List<CuckooSignature> Signatures { get; set; }
+
+        [JsonProperty("target")]
+        public CuckooTarget Target { get; set; }
+
+        [JsonProperty("debug")]
+        public DebugData Debug { get; set; }
+
+        [JsonProperty("metadata")]
+        public CuckooMetadata Metadata { get; set; }
+
+        [JsonProperty("strings")]
+        public List<string> Strings { get; set; }
+
+        [JsonProperty("network")]
+        public NetworkData Network { get; set; }
+
+        public JsonReport()
         {
-            Json = value;
+
         }
-        public override void Save(string path, string name)
+        public override async Task Save(string path, string name)
         {
-            throw new NotImplementedException();
+            using (FileStream file = new FileStream(Path.Combine(path, $"{name}.json"), FileMode.OpenOrCreate))
+            {
+                using (StreamWriter writter = new StreamWriter(file))
+                {
+                    await writter.WriteAsync(TextData);
+                }
+            }
         }
     }
 }

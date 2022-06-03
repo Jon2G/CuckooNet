@@ -21,6 +21,11 @@ namespace Cuckoo.Net.Internal
             else
             {
                 Console.WriteLine("failed");
+                switch (r.HttpStatusCode)
+                {
+                    case System.Net.HttpStatusCode.Unauthorized:
+                        throw new UnauthorizedAccessException("Unauthorized,api key may be wrong");
+                }
             }
             return new Response<T>(r.HttpStatusCode, r.Response);
         }
@@ -35,14 +40,16 @@ namespace Cuckoo.Net.Internal
     {
         public HttpStatusCode HttpStatusCode { get; set; }
         public string Message { get; set; }
-        public Response(HttpStatusCode httpStatusCode, string message)
+        public Stream Stream { get; set; }
+        public Response(HttpStatusCode httpStatusCode, string message, Stream stream = null)
         {
             this.HttpStatusCode = httpStatusCode;
             this.Message = message;
+            this.Stream = stream;
         }
         public static implicit operator Response(ResponseResult r)
         {
-            return new Response(r.HttpStatusCode, r.Response);
+            return new Response(r.HttpStatusCode, r.Response, r.Stream);
         }
     }
 }

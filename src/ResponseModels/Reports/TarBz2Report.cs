@@ -4,16 +4,20 @@ namespace Cuckoo.Net.ResponseModels.Reports
 {
     public class TarBz2Report : CuckooReport
     {
-        private readonly ReportFormat _format;
-        public override ReportFormat Format => _format;
-        public TarBz2Report(string value, ReportFormat format) : base(value)
+        public override ReportFormat Format => ReportFormat.ALL;
+        private readonly Stream Stream;
+        public TarBz2Report(Stream stream) : base()
         {
-            format = _format;
+            Stream = stream;
         }
 
-        public override void Save(string path, string name)
+        public override async Task Save(string path, string name)
         {
-            throw new NotImplementedException();
+            using (FileStream file = new FileStream(Path.Combine(path, $"{name}.tar.bz2"), FileMode.OpenOrCreate))
+            {
+                await this.Stream.CopyToAsync(file);
+            }
+            await Stream.DisposeAsync();
         }
     }
 }

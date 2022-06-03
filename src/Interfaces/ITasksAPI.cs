@@ -131,7 +131,7 @@ namespace Cuckoo.Net.Interfaces
         /// </summary>
         /// <param name="taskId">ID of the task to get the report for. (required)</param>
         /// <param name="screenshot">Numerical identifier of a single screenshot (e.g. 0001, 0002). (optional)</param>
-        public Task<Response> ScreenShots(int taskId, int? screenshot = null);
+        public Task<Response<ZipResponse>> ScreenShots(int taskId, int? screenshot = null);
 
         /// <summary>
         /// /tasks/rereport

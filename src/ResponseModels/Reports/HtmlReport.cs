@@ -5,14 +5,19 @@ namespace Cuckoo.Net.ResponseModels.Reports
     public class HtmlReport : CuckooReport
     {
         public override ReportFormat Format => ReportFormat.HTML;
-        private readonly string HTML;
-        public HtmlReport(string value) : base(value)
+        public HtmlReport() : base()
         {
-            HTML = value;
+
         }
-        public override void Save(string path, string name)
+        public override async Task Save(string path, string name)
         {
-            throw new NotImplementedException();
+            using (FileStream file = new FileStream(Path.Combine(path, $"{name}.html"), FileMode.OpenOrCreate))
+            {
+                using (StreamWriter writter = new StreamWriter(file))
+                {
+                    await writter.WriteAsync(TextData);
+                }
+            }
         }
     }
 }

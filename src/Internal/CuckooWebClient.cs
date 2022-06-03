@@ -79,8 +79,17 @@ namespace Cuckoo.Net.Internal
             try
             {
                 HttpResponseMessage response = await this.HttpClient.GetAsync(method);
-                string json = await response.Content.ReadAsStringAsync();
-                return new ResponseResult(response.StatusCode, json);
+                switch (response.Content?.Headers?.ContentType?.MediaType)
+                {
+                    case "text/html":
+                    case "application/json":
+                        string json = await response.Content.ReadAsStringAsync();
+                        return new ResponseResult(response.StatusCode, json);
+                    default:
+                        Stream stream = await response.Content.ReadAsStreamAsync();
+                        stream.Position = 0;
+                        return new ResponseResult(response.StatusCode, stream);
+                }
             }
             catch (HttpRequestException httpError)
             {

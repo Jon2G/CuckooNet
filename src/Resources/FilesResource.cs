@@ -18,11 +18,11 @@ namespace Cuckoo.Net.Resources
         public async Task<Response<SampleResponse>> View(int? id = null, string sha256 = "", string md5 = "")
         {
             if (id is not null)
-                return await Client.Get($"/files/get/{id}");
+                return await Client.Get($"/files/view/id/{id}");
             if (!string.IsNullOrEmpty(sha256))
-                return await Client.Get($"/files/get/{sha256}");
+                return await Client.Get($"/files/view/sha256/{sha256}");
             if (!string.IsNullOrEmpty(md5))
-                return await Client.Get($"/files/get/{md5}");
+                return await Client.Get($"/files/view/md5/{md5}");
             throw new ArgumentNullException("Id,sha256 or md5 must be provided");
         }
     }

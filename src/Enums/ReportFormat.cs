@@ -16,7 +16,7 @@ namespace Cuckoo.Net.Enums
                 case ReportFormat.JSON:
                     return "json";
                 case ReportFormat.HTML:
-                    return "html";
+                    return "";
                 case ReportFormat.ALL:
                     return "all";
                 case ReportFormat.DROPPED:

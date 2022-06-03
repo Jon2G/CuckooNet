@@ -4,6 +4,7 @@ using Cuckoo.Net.Internal;
 using Cuckoo.Net.RequestsModel;
 using Cuckoo.Net.ResponseModels;
 using Cuckoo.Net.ResponseModels.Reports;
+using System.Net;
 
 namespace Cuckoo.Net.Resources
 {
@@ -71,17 +72,19 @@ namespace Cuckoo.Net.Resources
         public async Task<Response<CuckooReport>> Report(int taskId, ReportFormat format = ReportFormat.JSON)
         {
             Response response = await Client.Get($"/tasks/report/{taskId}/{format.GetString()}");
+            if (response.HttpStatusCode != HttpStatusCode.OK)
+                return new Response<CuckooReport>(response.HttpStatusCode, response.HttpStatusCode.ToString());
             switch (format)
             {
                 case ReportFormat.ALL:
                 case ReportFormat.DROPPED:
-                    return new Response<CuckooReport>(response.HttpStatusCode, "Ok", new TarBz2Report(response.Message, format));
+                    return new Response<CuckooReport>(response.HttpStatusCode, "Ok", new TarBz2Report(response.Stream));
                 case ReportFormat.JSON:
-                    return new Response<CuckooReport>(response.HttpStatusCode, "Ok", new JsonReport(response.Message));
+                    return new Response<CuckooReport>(response.HttpStatusCode, "Ok", CuckooReport.Get<JsonReport>(response.Message));
                 case ReportFormat.HTML:
-                    return new Response<CuckooReport>(response.HttpStatusCode, "Ok", new HtmlReport(response.Message));
+                    return new Response<CuckooReport>(response.HttpStatusCode, "Ok", CuckooReport.Get<HtmlReport>(response.Message));
                 case ReportFormat.PACKAGE_FILES:
-                    return new Response<CuckooReport>(response.HttpStatusCode, "Ok", new PackageFilesReport(response.Message));
+                    return new Response<CuckooReport>(response.HttpStatusCode, "Ok", new PackageFilesReport(response.Stream));
                 default:
                     throw new ArgumentOutOfRangeException(nameof(format));
             }
@@ -97,11 +100,18 @@ namespace Cuckoo.Net.Resources
             return await Client.Get($"/tasks/sample/{sampleId}");
         }
 
-        public async Task<Response> ScreenShots(int taskId, int? screenshot = null)
+        public async Task<Response<ZipResponse>> ScreenShots(int taskId, int? screenshot = null)
         {
+            ZipResponse zip = null;
+            Response response;
             if (screenshot is { })
-                return await Client.Get($"/tasks/report/{taskId}/{screenshot:D4}");
-            return await Client.Get($"/tasks/report/{taskId}");
+                response = await Client.Get($"/tasks/screenshots/{taskId}/{screenshot:D4}");
+            response = await Client.Get($"/tasks/screenshots/{taskId}");
+            if (response is { })
+            {
+                zip = new ZipResponse(response.Stream);
+            }
+            return new Response<ZipResponse>(response.HttpStatusCode, response.Message, zip);
         }
 
         public async Task<Response> Summary(int taskId)

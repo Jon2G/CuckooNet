@@ -6,7 +6,7 @@
         [SetUp]
         public void Setup()
         {
-            API = new Cuckoo.Net.CuckooAPI("http://172.25.87.33:8090", "jon2g");
+            API = new Cuckoo.Net.CuckooAPI("http://localhost:8090", "<Your API Key>");
         }
     }
 }

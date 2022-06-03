@@ -5,12 +5,18 @@ namespace Cuckoo.Net.ResponseModels.Reports
     public class PackageFilesReport : CuckooReport
     {
         public override ReportFormat Format => ReportFormat.PACKAGE_FILES;
-        public PackageFilesReport(string value) : base(value)
+        private readonly Stream Stream;
+        public PackageFilesReport(Stream stream) : base()
         {
+            Stream = stream;
         }
-        public override void Save(string path, string name)
+        public override async Task Save(string path, string name)
         {
-            throw new NotImplementedException();
+            using (FileStream file = new FileStream(Path.Combine(path, $"{name}.tar.bz2"), FileMode.OpenOrCreate))
+            {
+                await this.Stream.CopyToAsync(file);
+            }
+            await Stream.DisposeAsync();
         }
     }
 }

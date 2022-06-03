@@ -1,5 +1,4 @@
-﻿using Cuckoo.Net.Enums;
-using Cuckoo.Net.ResponseModels;
+﻿using Cuckoo.Net.ResponseModels;
 using Newtonsoft.Json;
 using System.Net;
 
@@ -85,13 +84,13 @@ namespace TestProject
         [Test]
         public async Task Report()
         {
-            var response = await API.Tasks.Report(2, ReportFormat.HTML);
+            var response = await API.Tasks.Report(1);
             Assert.That(response.HttpStatusCode, Is.EqualTo(HttpStatusCode.OK));
         }
         [Test]
         public async Task ReReport()
         {
-            var response = await API.Tasks.ReReport(1);
+            var response = await API.Tasks.ReReport(9);
             Assert.That(response.HttpStatusCode, Is.EqualTo(HttpStatusCode.OK));
         }
         [Test]
@@ -103,19 +102,22 @@ namespace TestProject
         [Test]
         public async Task ScreenShots()
         {
-            var response = await API.Tasks.ScreenShots(1);
+            var response = await API.Tasks.ScreenShots(9);
             Assert.That(response.HttpStatusCode, Is.EqualTo(HttpStatusCode.OK));
+            Assert.That(response.Content, Is.Not.Null);
+            if (response.Content is { })
+                await response.Content.Save("screenshots");
         }
         [Test]
         public async Task Summary()
         {
-            var response = await API.Tasks.Summary(2);
+            var response = await API.Tasks.Summary(9);
             Assert.That(response.HttpStatusCode, Is.EqualTo(HttpStatusCode.OK));
         }
         [Test]
         public async Task View()
         {
-            var response = await API.Tasks.View(2);
+            var response = await API.Tasks.View(9);
             Assert.That(response.HttpStatusCode, Is.EqualTo(HttpStatusCode.OK));
             Assert.That(response.Content, Is.Not.Null);
         }
