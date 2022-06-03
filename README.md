@@ -15,7 +15,7 @@
 ```csharp
 CuckooAPI api = new Cuckoo.Net.CuckooAPI("http://localhost:8090", "<Your API Key>");
 
-#Get Cuckoo status
+//Get Cuckoo status
 Response<CuckooStatus> status = await api.Cuckoo.Status();
 Console.WriteLine($"Hostname is:{status.Content.HostName}"); 
 
