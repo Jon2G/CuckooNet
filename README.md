@@ -1,7 +1,7 @@
 # CuckooNet - A full implementation of the Cuckoo Sandbox Rest 2.0.7 API 
  
 
-[![NuGet](https://img.shields.io/nuget/v/CuckooNet.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/CuckooNet/)
+[![NuGet](https://img.shields.io/nuget/v/Cuckoo.Net.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Cuckoo.Net/)
 
 ### Features
 
