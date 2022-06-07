@@ -41,6 +41,7 @@ namespace Cuckoo.Net.Internal
         public HttpStatusCode HttpStatusCode { get; set; }
         public string Message { get; set; }
         public Stream Stream { get; set; }
+        public bool Ok => HttpStatusCode.OK == HttpStatusCode;
         public Response(HttpStatusCode httpStatusCode, string message, Stream stream = null)
         {
             this.HttpStatusCode = httpStatusCode;
