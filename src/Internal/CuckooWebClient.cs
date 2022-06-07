@@ -1,5 +1,10 @@
-﻿using System.Net.Http.Headers;
+﻿using Newtonsoft.Json;
+using System.Net.Http.Headers;
+using System.Text;
+
+#if NET5_0_OR_GREATER
 using System.Net.Http.Json;
+#endif
 
 namespace Cuckoo.Net.Internal
 {
@@ -19,14 +24,22 @@ namespace Cuckoo.Net.Internal
         {
             try
             {
-                HttpResponseMessage response = await HttpClient.PostAsync(method, JsonContent.Create(obj, typeof(T)));
+#if NETSTANDARD || NETCOREAPP
+                HttpContent jsonobj = new StringContent(JsonConvert.SerializeObject(obj), Encoding.UTF8, "application/json");
+#else
+                HttpContent jsonobj = JsonContent.Create(obj, typeof(T));
+#endif
+                HttpResponseMessage response = await HttpClient.PostAsync(method, jsonobj);
                 string json = await response.Content.ReadAsStringAsync();
                 return new ResponseResult(response.StatusCode, json);
             }
             catch (HttpRequestException httpError)
             {
+#if NETSTANDARD || NETCOREAPP
+                return new ResponseResult((System.Net.HttpStatusCode)httpError.HResult, httpError.Message);
+#else
                 return new ResponseResult(httpError.StatusCode ?? System.Net.HttpStatusCode.Unused, httpError.Message);
-
+#endif
             }
             catch (Exception ex)
             {
@@ -46,8 +59,11 @@ namespace Cuckoo.Net.Internal
             }
             catch (HttpRequestException httpError)
             {
+#if NETSTANDARD|| NETCOREAPP
+                return new ResponseResult((System.Net.HttpStatusCode)httpError.HResult, httpError.Message);
+#else
                 return new ResponseResult(httpError.StatusCode ?? System.Net.HttpStatusCode.Unused, httpError.Message);
-
+#endif
             }
             catch (Exception ex)
             {
@@ -93,8 +109,11 @@ namespace Cuckoo.Net.Internal
             }
             catch (HttpRequestException httpError)
             {
+#if NETSTANDARD|| NETCOREAPP
+                return new ResponseResult((System.Net.HttpStatusCode)httpError.HResult, httpError.Message);
+#else
                 return new ResponseResult(httpError.StatusCode ?? System.Net.HttpStatusCode.Unused, httpError.Message);
-
+#endif
             }
             catch (Exception ex)
             {

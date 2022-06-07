@@ -1,9 +1,19 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFrameworks>net6.0;netstandard2.0;net5.0;netstandard2.1;netcoreapp3.1</TargetFrameworks>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Description>A full implementation of the Cuckoo Sandbox Rest 2.0.7 API </Description>
+    <PackageProjectUrl>https://github.com/Jon2G/CuckooNet</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Jon2G/CuckooNet</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageTags>Cuckoo,Sandbox,API,Rest,Malware</PackageTags>
+    <NeutralLanguage>en</NeutralLanguage>
+	  <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -15,8 +25,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+	  <None Include="../LICENSE" Pack="true" PackagePath="LICENSE.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-    <PackageReference Include="RestSharp" Version="107.3.0" />
+    <PackageReference Include="System.Net.Primitives" Version="4.3.1" />
   </ItemGroup>
 
 </Project>

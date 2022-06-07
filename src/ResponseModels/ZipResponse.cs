@@ -15,7 +15,11 @@
             {
                 await this.Stream.CopyToAsync(file);
             }
+#if NETSTANDARD
+            Stream.Dispose();
+#else
             await Stream.DisposeAsync();
+#endif
         }
     }
 }
