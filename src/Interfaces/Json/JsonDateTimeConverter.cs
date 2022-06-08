@@ -10,7 +10,8 @@ namespace Cuckoo.Net.Interfaces.Json
         private static readonly Regex DateGMT = new Regex(@"\w+, (?<day>\d\d) (?<month>\w+) (?<year>\d\d\d\d) (?<hour>\d\d):(?<minute>\d\d):(?<seconds>\d\d) GMT");
         public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
         {
-            throw new NotImplementedException();
+            if (value is DateTime { } date)
+                writer.WriteValue((DateTime)date);
         }
 
         public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
