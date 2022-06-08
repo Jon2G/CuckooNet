@@ -3,7 +3,6 @@ using Cuckoo.Net.Interfaces;
 using Cuckoo.Net.Internal;
 using Cuckoo.Net.RequestsModel;
 using Cuckoo.Net.ResponseModels;
-using Cuckoo.Net.ResponseModels.Reports;
 using System.Net;
 
 namespace Cuckoo.Net.Resources

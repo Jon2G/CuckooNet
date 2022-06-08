@@ -1,6 +1,6 @@
 ﻿using Cuckoo.Net.Enums;
 using Cuckoo.Net.Internal;
-using Cuckoo.Net.ResponseModels.Reports;
+using Cuckoo.Net.ResponseModels;
 using System.Net;
 
 namespace TestProject

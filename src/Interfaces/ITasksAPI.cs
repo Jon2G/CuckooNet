@@ -2,7 +2,6 @@
 using Cuckoo.Net.Internal;
 using Cuckoo.Net.RequestsModel;
 using Cuckoo.Net.ResponseModels;
-using Cuckoo.Net.ResponseModels.Reports;
 
 namespace Cuckoo.Net.Interfaces
 {

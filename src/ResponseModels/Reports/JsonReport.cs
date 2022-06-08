@@ -1,7 +1,7 @@
 ﻿using Cuckoo.Net.Enums;
 using Newtonsoft.Json;
 
-namespace Cuckoo.Net.ResponseModels.Reports
+namespace Cuckoo.Net.ResponseModels
 {
     public class JsonReport : CuckooReport
     {

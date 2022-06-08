@@ -1,6 +1,6 @@
 ﻿using Cuckoo.Net.Enums;
 
-namespace Cuckoo.Net.ResponseModels.Reports
+namespace Cuckoo.Net.ResponseModels
 {
     public class PackageFilesReport : CuckooReport
     {
