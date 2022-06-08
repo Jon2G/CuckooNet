@@ -2,6 +2,6 @@
 {
     public enum Status
     {
-        Pending, Running, Completed, Reported
+        Pending, Running, Completed, Reported,failed_analysis
     }
 }
